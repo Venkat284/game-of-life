@@ -25,7 +25,7 @@ pipeline{
           steps{
               //prepare sonarqube scanner enviornment
               withSonarQubeEnv('SonarQube6.7.7'){
-                  bat 'mvn org.sonarsource.scanner.maven-plugin:4.2.0.1873:sonar'
+                  bat 'mvn org.sonarsource.scanner.maven-plugin:3.3.0.1492:sonar'
 
               }
           }
