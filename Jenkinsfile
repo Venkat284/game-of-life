@@ -1,9 +1,14 @@
 pipeline{
+    // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+    def server = Artifactory.server "Artifactory Version 4.15.0"
+    // Create an Artifactory Maven instance.
+    def rtMaven = Artifactory.newMavenBuild()
+    def buildInfo
     agent any
     tools{
-     jdk "java-1.8"
+     jdk "jdk8"
      
-     maven "Maven -3.3.9"
+     maven "maven"
 
   }
   stages{
@@ -42,7 +47,7 @@ pipeline{
       stage('Execute Maven'){
           steps{
               scrpit{
-                  rtMaven.run pom:'pom.xml',goals: 'clean install', buildInfo: buildInfo
+                  rtMaven.run pom:'pom.xml',goals: 'clean install',buildInfo: buildInfo
               }
           }
 
