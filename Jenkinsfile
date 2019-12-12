@@ -1,3 +1,10 @@
+// Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+    def server = Artifactory.server "Artifactory Version 4.15.0"
+    // Create an Artifactory Maven instance.
+    def rtMaven = Artifactory.newMavenBuild()
+    def buildInfo
+
+
 pipeline{
     agent any
     tools{
@@ -8,13 +15,6 @@ pipeline{
   }
    
   stages{
-      
-       // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
-    def server = Artifactory.server "Artifactory Version 4.15.0"
-    // Create an Artifactory Maven instance.
-    def rtMaven = Artifactory.newMavenBuild()
-    def buildInfo
-      
       stage('Clone sources'){
        steps{
           git url : 'https://github.com/Venkat284/game-of-life.git'
@@ -49,9 +49,10 @@ pipeline{
       //stage 4 executing maven goals
       stage('Execute Maven'){
           steps{
+              script{
               buildInfo = rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install'
                  // rtMaven.run pom:'pom.xml',goals: 'clean install',buildInfo: buildInfo
-              
+              }
           }
 
       }
